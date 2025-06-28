@@ -11,18 +11,18 @@ fn gbk_to_utf8(bytes: &[u8]) -> String {
 }
 
 fn main() -> std::io::Result<()> {
-    let args = args().skip(1).collect::<Vec<String>>().join(" ");
+    let args: Vec<String> = args().skip(1).collect();
     if args.is_empty() {
         eprintln!("No command provided. Usage: <command> [args...]");
         std::process::exit(1);
     }
-    println!("Running command: {}", args);
+    println!("Running command: {:?}", args);
     let (mut recv, send) = std::io::pipe()?;
 
     let mut command = Command::new("cmd")
         .creation_flags(0x08000000)
         .arg("/C")
-        .arg(args)
+        .args(&args)
         .stdout(send.try_clone()?)
         .stderr(send)
         .spawn()?;
