@@ -41,10 +41,6 @@ dumycmd.exe ping google.com
 
 ## ⚠️ 注意事项
 
-### 空格处理限制
-
-**对原始命令中包含空格的情况支持不是很好**。
-
 ### 推荐用法
 
 - ✅ 简单命令：`dumycmd.exe dir`
