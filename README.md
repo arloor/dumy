@@ -1,6 +1,17 @@
 # DumyCmd
 
-一个用于在后台静默执行 Windows 命令的工具程序。
+一个用于在后台静默执行 Windows 命令的工具程序。个人用于替换下面的vbs脚本以实现隐藏windows控制台窗口，用于开启自启动或任务计划程序
+
+```powershell
+Set WshShell = CreateObject("WScript.Shell")
+WshShell.Run "sslocal --local-addr xxxxxx -k xxxxx -v -m aes-256-gcm -s xxxxxxx", 0
+```
+
+直接替换为
+
+```bash
+dumycmd.exe sslocal --local-addr xxxxxx -k xxxxx -v -m aes-256-gcm -s xxxxxxx
+```
 
 ## 功能特点
 
