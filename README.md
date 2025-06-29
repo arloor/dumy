@@ -64,6 +64,7 @@ dumycmd.exe ping google.com
 
 ```bash
 cargo build --release --features no-console
+cargo install --path . --features no-console
 ```
 
 编译后的可执行文件位于 `target/release/dumycmd.exe`
