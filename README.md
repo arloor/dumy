@@ -63,7 +63,7 @@ dumycmd.exe ping google.com
 确保已安装 Rust，然后执行：
 
 ```bash
-cargo build --release
+cargo build --release --features no-console
 ```
 
 编译后的可执行文件位于 `target/release/dumycmd.exe`
