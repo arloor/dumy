@@ -3,5 +3,9 @@ name = "dumycmd"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = []
+no-console = []
+
 [dependencies]
 encoding_rs = "0.8"

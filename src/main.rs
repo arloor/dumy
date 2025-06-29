@@ -1,4 +1,4 @@
-#![windows_subsystem = "windows"]
+#![cfg_attr(windows_subsystem, windows_subsystem = "windows")]
 use encoding_rs::GBK;
 use std::env::args;
 use std::io::Read;
