@@ -37,17 +37,26 @@ fn main() -> std::io::Result<()> {
         .stderr(send)
         .spawn()?;
 
-    // Stream output incrementally
-    let mut buffer = [0; 1024];
-    loop {
-        match recv.read(&mut buffer) {
-            Ok(0) => break, // End of stream
-            Ok(n) => {
-                let chunk = &buffer[..n];
-                print!("{}", gbk_to_utf8(chunk));
+    // Spawn a thread to read the output from the pipe
+    // because in powershell mode, the EOF is not sent, and then the recv.read is blocked.
+    if !cfg!(feature = "no-console") {
+        let _output_handle = std::thread::spawn(move || {
+            let mut buffer = [0; 1024];
+            loop {
+                match recv.read(&mut buffer) {
+                    Ok(0) => {
+                        // End of stream, break the loop
+                        println!("\nEnd of output stream.");
+                        break;
+                    } // End of stream
+                    Ok(n) => {
+                        let chunk = &buffer[..n];
+                        print!("{}", gbk_to_utf8(chunk));
+                    }
+                    Err(_) => break,
+                }
             }
-            Err(e) => return Err(e),
-        }
+        });
     }
 
     // It's important that we read from the pipe before the process exits, to avoid
