@@ -31,8 +31,8 @@
                     "kind": "bin"
                 }
             },
-            // "args": ["wsl","-d","Debian","/usr/local/bin/keepalive"],
             "args": ["dir"],
+            // "args": ["\"Set-NetIPv6Protocol -UseTemporaryAddresses Disabled;Set-NetIPv6Protocol -RandomizeIdentifiers Disabled;Get-NetIPv6Protocol\""],
             "cwd": "${workspaceFolder}"
         },
         {

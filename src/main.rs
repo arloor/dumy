@@ -18,10 +18,20 @@ fn main() -> std::io::Result<()> {
     }
     println!("Running command: {:?}", args);
     let (mut recv, send) = std::io::pipe()?;
+    let mut base = if cfg!(feature = "cmd") {
+        let mut cmd = Command::new("cmd");
+        cmd.creation_flags(0x08000000).arg("/C");
+        cmd
+    } else {
+        let mut cmd = Command::new("powershell");
+        cmd.creation_flags(0x08000000)
+            .arg("-ExecutionPolicy")
+            .arg("Bypass")
+            .arg("-Command");
+        cmd
+    };
 
-    let mut command = Command::new("cmd")
-        .creation_flags(0x08000000)
-        .arg("/C")
+    let mut command = base
         .args(&args)
         .stdout(send.try_clone()?)
         .stderr(send)
