@@ -1,6 +1,6 @@
 # DumyCmd
 
-一个用于在后台静默执行 Windows 命令的工具程序。个人用于替换下面的vbs脚本以实现隐藏windows控制台窗口，用于开启自启动或任务计划程序
+一个用于在后台静默执行 Windows 命令的工具程序。个人用于替换下面的 vbs 脚本以实现隐藏 windows 控制台窗口，用于开启自启动或任务计划程序
 
 ```powershell
 Set WshShell = CreateObject("WScript.Shell")
@@ -39,36 +39,92 @@ dumycmd.exe <command> [args...]
 
 ### 示例
 
-```bash
+```powershell
 # 列出目录内容
-dumycmd.exe dir
-
-# 执行批处理文件
-dumycmd.exe script.bat
-
+cargo run -- dir
 # 运行其他程序
-dumycmd.exe ping google.com
+cargo run -- ping baidu.com
+cargo run --features cmd -- mkdir "a b" # 参数中带目录时，需要使用cmd feature
+cargo run -- "Get-NETIPV4Protocol; GET-NETIPV6protocol" # 默认为powershell模式，支持powershell的命令
 ```
 
-## ⚠️ 注意事项
+## Feature 特性说明
 
-### 推荐用法
+本项目支持多个可选特性（features），可以根据不同需求进行编译：
 
-- ✅ 简单命令：`dumycmd.exe dir`
-- ✅ 不含空格的路径：`dumycmd.exe ping google.com`
-- ✅ 批处理文件：`dumycmd.exe mybatch.bat`
+### `no-console`
+
+- **作用**：隐藏控制台窗口，程序运行时不显示黑色命令行窗口
+- **实现原理**：启用 `windows_subsystem = "windows"` 编译选项
+- **使用场景**：
+  - Windows 任务计划程序中的后台任务
+  - 自动化脚本执行
+  - 需要静默运行的程序
+- **启用方法**：
+  ```bash
+  cargo build --features no-console
+  cargo run --features no-console -- <command>
+  ```
+
+### `cmd`
+
+- **作用**：使用 Windows CMD 命令行解释器执行命令
+- **默认行为**：不启用时使用 PowerShell 执行命令
+- **使用场景**：
+  - 需要执行传统的 DOS/CMD 命令
+  - 参数中包含空格的路径或文件名
+  - 与旧版 Windows 批处理脚本兼容
+- **启用方法**：
+  ```bash
+  cargo build --features cmd
+  cargo run --features cmd -- mkdir "a b"
+  ```
+
+### 组合使用
+
+可以同时启用多个特性：
+
+```bash
+# 同时启用无控制台和CMD模式
+cargo build --features "no-console,cmd"
+cargo run --features "no-console,cmd" -- <command>
+```
 
 ## 编译方法
 
-确保已安装 Rust，然后执行：
+确保已安装 Rust，然后根据需要选择不同的编译方式：
+
+### 基础编译
 
 ```bash
+# 默认编译（显示控制台，使用PowerShell）
+cargo build --release
+
+# 编译并安装到系统
+cargo install --path .
+```
+
+### 静默模式编译（推荐用于生产环境）
+
+```bash
+# 编译无控制台版本（适用于任务计划程序）
 cargo build --release --features no-console
+
+# 安装无控制台版本
 cargo install --path . --features no-console
 ```
 
-编译后的可执行文件位于 `target/release/dumycmd.exe`
+### CMD 模式编译
 
+```bash
+# 编译CMD版本
+cargo build --release --features cmd
+
+# 编译无控制台的CMD版本
+cargo build --release --features "no-console,cmd"
+```
+
+编译后的可执行文件位于 `target/release/dumycmd.exe`
 
 ## 参考文档：
 
