@@ -1,11 +1,9 @@
 use std::io::Read as _;
 
 use encoding_rs::GBK;
-#[cfg(feature = "no-console")]
 use log::info;
 
 pub(crate) fn init_log() {
-    #[cfg(feature = "no-console")]
     let _ = log_x::init_log("log", "dumy");
 }
 
@@ -24,17 +22,13 @@ pub(crate) fn consume(mut recv: std::io::PipeReader) {
             match recv.read(&mut buffer) {
                 Ok(0) => {
                     // End of stream, break the loop
-                    #[cfg(feature = "no-console")]
-                    info!("\nEnd of output stream.");
-                    println!("\nEnd of output stream.");
+                    info!("End of output stream.");
                     break;
                 } // End of stream
                 Ok(n) => {
                     let chunk = &buffer[..n];
                     let content = gbk_to_utf8(chunk);
-                    #[cfg(feature = "no-console")]
-                    info!("{content}");
-                    print!("{content}");
+                    info!("\n{content}");
                 }
                 Err(_) => break,
             }

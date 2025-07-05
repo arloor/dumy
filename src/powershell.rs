@@ -1,5 +1,6 @@
 #![cfg_attr(windows_subsystem, windows_subsystem = "windows")]
 mod io;
+use log::{info, warn};
 use std::env::args;
 use std::os::windows::process::CommandExt;
 use std::process::Command;
@@ -10,10 +11,10 @@ fn main() -> std::io::Result<()> {
     init_log();
     let args: Vec<String> = args().skip(1).collect();
     if args.is_empty() {
-        eprintln!("No command provided. Usage: <command> [args...]");
+        warn!("No command provided. Usage: <command> [args...]");
         std::process::exit(1);
     }
-    println!("Running command: {:?}", args);
+    info!("Running command: {:?}", args);
     let (recv, send) = std::io::pipe()?;
 
     let mut command = Command::new("powershell")
@@ -31,10 +32,10 @@ fn main() -> std::io::Result<()> {
     // It's important that we read from the pipe before the process exits, to avoid
     // filling the OS buffers if the program emits too much output.
     if !command.wait()?.success() {
-        eprintln!("Command failed",);
+        warn!("Command failed",);
         std::process::exit(1);
     } else {
-        eprintln!("Command succeeded",);
+        info!("Command succeeded",);
     }
     Ok(())
 }
