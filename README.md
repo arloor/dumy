@@ -21,16 +21,11 @@ dumycmd.exe sslocal --local-addr xxxxxx -k xxxxx -v -m aes-256-gcm -s xxxxxxx
 
 ```powershell
 cargo run --bin dumycmd -- netsh interface ipv6 show global
+cargo run --bin dumycmd -- mkdir "a b"
 cargo run --bin dumypwsh -- "Get-netIPV4Protocol;Get-netIPV6Protocol"
+cargo run --bin dumypwsh -- Get-netIPV4Protocol
+cargo run --bin dumypwsh -- "mkdir 'a b c'"
 ```
-
-dumycmd支持参数中包含空格的情况，只需要使用双引号包裹即可:
-
-```powershell
-cargo run --bin dumycmd -- mkdir "a b c"
-```
-
-dumypwsh 不支持参数中包含双引号。
 
 ## 安装
 
