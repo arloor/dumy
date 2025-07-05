@@ -4,9 +4,10 @@ use std::env::args;
 use std::os::windows::process::CommandExt;
 use std::process::Command;
 
-use crate::io::consume;
+use crate::io::{consume, init_log};
 
 fn main() -> std::io::Result<()> {
+    init_log();
     let args: Vec<String> = args().skip(1).collect();
     if args.is_empty() {
         eprintln!("No command provided. Usage: <command> [args...]");
