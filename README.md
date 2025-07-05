@@ -39,6 +39,10 @@ cargo install --path . --features no-console --bin dumycmd
 cargo install --path . --features no-console --bin dumypwsh
 ```
 
+## 日志文件
+
+如果在执行命令时遇到问题，可以查看日志文件 `dumy.log`，该文件位于当前工作目录下。
+
 ## 参考文档：
 
 [Process Creation Flags](https://learn.microsoft.com/en-us/windows/win32/procthread/process-creation-flags)
