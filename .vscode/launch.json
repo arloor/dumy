@@ -7,32 +7,19 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Cargo launch",
-            "cargo": {
-                "args": [
-                    "build",
-                    "--lib"
-                ]
-            },
-            "args": []
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
             "name": "Debug executable 'dumycmd'",
             "cargo": {
                 "args": [
                     "build",
                     "--bin=dumycmd",
-                    "--package=dumycmd"
+                    "--package=dumy"
                 ],
                 "filter": {
                     "name": "dumycmd",
                     "kind": "bin"
                 }
             },
-            // "args": ["dir"],
-            "args": ["ping","baidu.com"],
+            "args": ["dir"],
             "cwd": "${workspaceFolder}"
         },
         {
@@ -44,10 +31,47 @@
                     "test",
                     "--no-run",
                     "--bin=dumycmd",
-                    "--package=dumycmd"
+                    "--package=dumy"
                 ],
                 "filter": {
                     "name": "dumycmd",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'dumypwsh'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=dumypwsh",
+                    "--package=dumy"
+                ],
+                "filter": {
+                    "name": "dumypwsh",
+                    "kind": "bin"
+                }
+            },
+            "args": ["GET-netIPV6Protocol"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'dumypwsh'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=dumypwsh",
+                    "--package=dumy"
+                ],
+                "filter": {
+                    "name": "dumypwsh",
                     "kind": "bin"
                 }
             },

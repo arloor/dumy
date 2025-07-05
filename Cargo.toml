@@ -1,12 +1,19 @@
 [package]
-name = "dumycmd"
+name = "dumy"
 version = "0.1.0"
 edition = "2024"
+
+[[bin]]
+name = "dumycmd"
+path = "src/cmd.rs"
+
+[[bin]]
+name = "dumypwsh"
+path = "src/powershell.rs"
 
 [features]
 default = []
 no-console = []
-cmd=[]
 
 [dependencies]
 encoding_rs = "0.8"
