@@ -44,7 +44,9 @@ cargo install --path . --features no-console --bin dumypwsh
 
 ![alt text](image.png)
 
-可以代替powershell的快捷程序，来达成隐藏窗口，并且突破程序最长260个字符的限制，例如：
+| 起始位置下的 log 目录中存放日志文件
+
+可以代替 powershell 的快捷程序，来达成隐藏窗口，并且突破程序最长 260 个字符的限制，例如：
 
 ```pwsh
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -Command "Stop-VM -Name 'rhel9'"
@@ -53,6 +55,8 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 ## 任务计划程序使用
 
 ![alt text](image-1.png)
+
+| 起始位置下的 log 目录中存放日志文件
 
 ## 参考文档：
 
