@@ -46,6 +46,8 @@ cargo install --path . --features no-console --bin dumypwsh
 
 | 起始位置下的 log 目录中存放日志文件
 
+| 可以把快捷方式移动到 `C:\ProgramData\Microsoft\Windows\Start Menu\Programs` 来添加到开始菜单
+
 可以代替 powershell 的快捷程序，来达成隐藏窗口，并且突破程序最长 260 个字符的限制，例如：
 
 ```pwsh
