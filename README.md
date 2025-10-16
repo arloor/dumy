@@ -27,10 +27,6 @@ cargo run --bin dumypwsh -- "Get-netIPV4Protocol;Get-netIPV6Protocol"
 cargo run --bin dumypwsh -- "Set-NetIPv6Protocol -UseTemporaryAddresses Disabled;Set-NetIPv6Protocol -RandomizeIdentifiers Disabled;Get-NetIPv6Protocol;Restart-NetAdapter -Name '以太网 6'"
 cargo run --bin dumypwsh -- Get-netIPV4Protocol
 cargo run --bin dumypwsh -- "mkdir 'a b c'"
-# 关闭虚拟机平台和hyperv
-cargo run --bin dumypwsh -- "dism.exe /online /disable-feature /featurename:VirtualMachinePlatform /norestart;DISM /Online /Disable-Feature /FeatureName:Microsoft-Hyper-V-All /NoRestart;sc.exe config wslservice start= disabled"
-# 启动虚拟及平台和hyperv
-cargo run --bin dumypwsh -- "dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart;DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V-All /NoRestart;sc.exe config wslservice start= demand"
 ```
 
 ## 安装
@@ -43,6 +39,20 @@ cargo install --path . --features no-console --bin dumypwsh
 ## 日志文件
 
 如果在执行命令时遇到问题，可以查看日志文件 `dumy.log`，该文件位于当前工作目录下。
+
+## 快捷方式
+
+![alt text](image.png)
+
+可以代替powershell的快捷程序，来达成隐藏窗口，并且突破程序最长260个字符的限制，例如：
+
+```pwsh
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -Command "Stop-VM -Name 'rhel9'"
+```
+
+## 任务计划程序使用
+
+![alt text](image-1.png)
 
 ## 参考文档：
 
