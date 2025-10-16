@@ -23,8 +23,14 @@ dumycmd.exe sslocal --local-addr xxxxxx -k xxxxx -v -m aes-256-gcm -s xxxxxxx
 cargo run --bin dumycmd -- netsh interface ipv6 show global
 cargo run --bin dumycmd -- mkdir "a b"
 cargo run --bin dumypwsh -- "Get-netIPV4Protocol;Get-netIPV6Protocol"
+# 将ipv6地址改成slaac分配
+cargo run --bin dumypwsh -- "Set-NetIPv6Protocol -UseTemporaryAddresses Disabled;Set-NetIPv6Protocol -RandomizeIdentifiers Disabled;Get-NetIPv6Protocol;Restart-NetAdapter -Name '以太网 6'"
 cargo run --bin dumypwsh -- Get-netIPV4Protocol
 cargo run --bin dumypwsh -- "mkdir 'a b c'"
+# 关闭虚拟机平台和hyperv
+cargo run --bin dumypwsh -- "dism.exe /online /disable-feature /featurename:VirtualMachinePlatform /norestart;DISM /Online /Disable-Feature /FeatureName:Microsoft-Hyper-V-All /NoRestart;sc.exe config wslservice start= disabled"
+# 启动虚拟及平台和hyperv
+cargo run --bin dumypwsh -- "dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart;DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V-All /NoRestart;sc.exe config wslservice start= demand"
 ```
 
 ## 安装
