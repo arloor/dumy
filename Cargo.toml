@@ -19,3 +19,4 @@ no-console = []
 encoding_rs = "0.8"
 log_x = { git = "https://github.com/arloor/rust_http_proxy.git" }
 log = { version = "0.4" }
+ctrlc = "3"

@@ -4,7 +4,7 @@ use encoding_rs::GBK;
 use log::info;
 
 pub(crate) fn init_log() {
-    let _ = log_x::init_log("log", "dumy");
+    let _ = log_x::init_log("log", "dumy", "info");
 }
 
 pub(crate) fn gbk_to_utf8(bytes: &[u8]) -> String {
