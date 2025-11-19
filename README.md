@@ -69,7 +69,9 @@ $trigger = New-ScheduledTaskTrigger -AtLogOn
 $action = New-ScheduledTaskAction -Execute "C:\Users\arloor\.cargo\bin\dumypwsh.exe" -Argument "C:\Users\arloor\mihomo\mihomo.exe -d C:\Users\arloor\mihomo -f C:\Users\arloor\mihomo\clash.yaml"
 
 # 3. 定义设置（可选）：例如允许按需运行，或者如果任务失败则重新启动
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+# -ExecutionTimeLimit (New-TimeSpan -Seconds 0) 表示取消"如果运行时间超过以下时间，停止任务"的限制
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Seconds 0)
+
 
 # 4. 注册（创建）任务
 # -TaskName: 任务名称
