@@ -32,8 +32,7 @@ impl JobObject {
         unsafe {
             // Create an anonymous job object
             let handle = CreateJobObjectW(None, None).map_err(|e| {
-                io::Error::new(
-                    io::ErrorKind::Other,
+                io::Error::other(
                     format!("CreateJobObjectW failed: {}", e),
                 )
             })?;
@@ -50,8 +49,7 @@ impl JobObject {
             )
             .map_err(|e| {
                 CloseHandle(handle).ok();
-                io::Error::new(
-                    io::ErrorKind::Other,
+                io::Error::other(
                     format!("SetInformationJobObject failed: {}", e),
                 )
             })?;
@@ -66,13 +64,12 @@ impl JobObject {
         unsafe {
             let process_handle = OpenProcess(PROCESS_SET_QUOTA | PROCESS_TERMINATE, false, pid)
                 .map_err(|e| {
-                    io::Error::new(io::ErrorKind::Other, format!("OpenProcess failed: {}", e))
+                    io::Error::other(format!("OpenProcess failed: {}", e))
                 })?;
 
             let result = AssignProcessToJobObject(self.handle, process_handle).map_err(|e| {
                 CloseHandle(process_handle).ok();
-                io::Error::new(
-                    io::ErrorKind::Other,
+                io::Error::other(
                     format!("AssignProcessToJobObject failed: {}", e),
                 )
             });
