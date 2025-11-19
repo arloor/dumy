@@ -58,7 +58,7 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 ![alt text](image-1.png)
 
-或者使用 powershell 脚本设定本用户登录时启动任务
+或者使用 powershell 脚本设定任意用户登录时启动任务
 
 ```pwsh
 # 1. 定义触发器：当任何用户登录时触发
