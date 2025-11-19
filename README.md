@@ -74,12 +74,14 @@ $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoi
 
 
 # 4. 注册（创建）任务
-# -TaskName: 任务名称
-# -User: 指定运行任务的用户账户。
-#        "Users" 表示所有用户组（通常用于交互式程序）。
-#        "SYSTEM" 表示以系统权限运行（通常用于后台服务）。
-# -RunLevel: Highest 表示以最高权限（管理员）运行
-Register-ScheduledTask -TaskName "mihomo" -Action $action -Trigger $trigger -Settings $settings -User $env:USERNAME -RunLevel Highest
+# 创建任务主体（权限）：以当前用户运行，最高权限
+$principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -RunLevel Highest
+
+# 创建任务对象
+$task = New-ScheduledTask -Action $action -Trigger $trigger -Settings $settings -Principal $principal
+
+# 注册任务
+Register-ScheduledTask -TaskName "mihomo" -InputObject $task
 ```
 
 ```powershell
