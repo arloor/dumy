@@ -66,7 +66,7 @@ $trigger = New-ScheduledTaskTrigger -AtLogOn
 
 # 2. 定义操作：要运行的程序和参数
 # 请将下面的路径替换为你实际的程序路径
-$action = New-ScheduledTaskAction -Execute "C:\Users\arloor\.cargo\bin\dumypwsh.exe" -Argument "C:\Users\arloor\mihomo\mihomo.exe -d C:\Users\arloor\mihomo -f C:\Users\arloor\mihomo\clash.yaml"
+$action = New-ScheduledTaskAction -Execute "C:\Users\arloor\.cargo\bin\dumypwsh.exe" -Argument "C:\Users\arloor\mihomo\mihomo.exe -d C:\Users\arloor\mihomo -f C:\Users\arloor\mihomo\clash.yaml" -WorkingDirectory $HOME
 
 # 3. 定义设置（可选）：例如允许按需运行，或者如果任务失败则重新启动
 # -ExecutionTimeLimit (New-TimeSpan -Seconds 0) 表示取消"如果运行时间超过以下时间，停止任务"的限制
@@ -79,7 +79,18 @@ $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoi
 #        "Users" 表示所有用户组（通常用于交互式程序）。
 #        "SYSTEM" 表示以系统权限运行（通常用于后台服务）。
 # -RunLevel: Highest 表示以最高权限（管理员）运行
-Register-ScheduledTask -TaskName "MyAutoStartTask" -Action $action -Trigger $trigger -Settings $settings -User $env:USERNAME -RunLevel Highest
+Register-ScheduledTask -TaskName "mihomo" -Action $action -Trigger $trigger -Settings $settings -User $env:USERNAME -RunLevel Highest
+```
+
+```powershell
+# 启动任务
+Start-ScheduledTask -TaskName "mihomo"
+
+# 停止任务
+Stop-ScheduledTask -TaskName "mihomo"
+
+# 删除任务
+Unregister-ScheduledTask -TaskName "mihomo" -Confirm:$false
 ```
 
 | 起始位置下的 log 目录中存放日志文件
