@@ -58,6 +58,28 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 ![alt text](image-1.png)
 
+或者使用 powershell 脚本设定本用户登录时启动任务
+
+```pwsh
+# 1. 定义触发器：当任何用户登录时触发
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+
+# 2. 定义操作：要运行的程序和参数
+# 请将下面的路径替换为你实际的程序路径
+$action = New-ScheduledTaskAction -Execute "C:\Users\arloor\.cargo\bin\dumypwsh.exe" -Argument "C:\Users\arloor\mihomo\mihomo.exe -d C:\Users\arloor\mihomo -f C:\Users\arloor\mihomo\clash.yaml"
+
+# 3. 定义设置（可选）：例如允许按需运行，或者如果任务失败则重新启动
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+
+# 4. 注册（创建）任务
+# -TaskName: 任务名称
+# -User: 指定运行任务的用户账户。
+#        "Users" 表示所有用户组（通常用于交互式程序）。
+#        "SYSTEM" 表示以系统权限运行（通常用于后台服务）。
+# -RunLevel: Highest 表示以最高权限（管理员）运行
+Register-ScheduledTask -TaskName "MyAutoStartTask" -Action $action -Trigger $trigger -Settings $settings -User $env:USERNAME -RunLevel Highest
+```
+
 | 起始位置下的 log 目录中存放日志文件
 
 ## 参考文档：
